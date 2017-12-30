@@ -5,6 +5,7 @@ import datetime
 import asyncio
 
 bot = commands.Bot(command_prefix='b!', description='A bot for managing birthdays!')
+token = ""
 
 @bot.event
 async def on_ready():
@@ -102,4 +103,6 @@ async def setbirthday(ctx):
         json.dump(date, f, indent=4)
 
 if __name__ == "__main__":
+    bot.run(token)
     self.bg_task = self.loop.create_task(self.check_for_birthday())
+    
