@@ -1,6 +1,8 @@
 import discord
 from discord.ext import commands
 import json
+import datetime
+import asyncio
 
 bot = commands.Bot(command_prefix='b!', description='A bot for managing birthdays!')
 
@@ -8,6 +10,16 @@ bot = commands.Bot(command_prefix='b!', description='A bot for managing birthday
 async def on_ready():
     print("Bot Is Online.")
     
+async def check_for_birthday(self):
+    await self.wait_until_ready()
+    now = datetime.datetime.now()
+    curmonth = now.month
+    curday = now.day
+    
+    while not self.is_closed():
+        # TODO loop through birthdays.json and check for matches
+        # TODO send birthday wish
+        await asyncio.sleep(86400) # task runs every day
 
 # on_guild_join is modified from CreeperBot
 @bot.event
@@ -88,3 +100,6 @@ async def setbirthday(ctx):
     
     with open('./birthdays.json', 'r+') as f:
         json.dump(date, f, indent=4)
+
+if __name__ == "__main__":
+    self.bg_task = self.loop.create_task(self.check_for_birthday())
