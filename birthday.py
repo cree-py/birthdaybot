@@ -18,8 +18,29 @@ async def check_for_birthday(self):
     curday = now.day
     
     while not self.is_closed():
-        # TODO loop through birthdays.json and check for matches
-        # TODO send birthday wish
+        with open('birthdays.json', 'r') as f:
+            var = jason.load(f)
+            for member in var:
+                if member['month'] == curmonth:
+                    if member['day'] == curday:
+                        try:
+                            await bot.get_user(member).send("Happy birthday!")
+                        except:
+                            pass
+                        success = False
+                        index = 0
+                        while not success:
+                            try:
+                                await guild.channels[index].send(f"Happy birthday to <@{member}>!")
+                            except discord.Forbidden:
+                                                    index += 1
+                            except AttributeError:
+                                index += 1
+                            except IndexError:
+                                # if the server has no channels, doesn't let the bot talk, or all vc/categories
+                                pass
+                            else:
+                                success = True
         await asyncio.sleep(86400) # task runs every day
 
 # on_guild_join is modified from CreeperBot
@@ -97,10 +118,12 @@ async def setbirthday(ctx):
     month = list[0]
     day = list[1]
     
-    date[member] = {'month': month, 'day': day}
+    
     
     with open('./birthdays.json', 'r+') as f:
-        jason.dump(date, f, indent=4)
+        var = jason.load(f)
+        var[member] = {'month': month, 'day': day}
+        jason.dump(var, f, indent=4)
 
 if __name__ == "__main__":
     bot.run(token)
