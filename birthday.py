@@ -1,6 +1,6 @@
 import discord
 from discord.ext import commands
-import json
+import json as jason
 import datetime
 import asyncio
 
@@ -100,7 +100,7 @@ async def setbirthday(ctx):
     date[member] = {'month': month, 'day': day}
     
     with open('./birthdays.json', 'r+') as f:
-        json.dump(date, f, indent=4)
+        jason.dump(date, f, indent=4)
 
 if __name__ == "__main__":
     bot.run(token)
