@@ -1,12 +1,13 @@
 import discord
 from discord.ext import commands
-import json as jason
+import json
 
 bot = commands.Bot(command_prefix='b!', description='A bot for managing birthdays!')
 
 @bot.event
 async def on_ready():
     print("Bot Is Online.")
+    
 
 # on_guild_join is modified from CreeperBot
 @bot.event
