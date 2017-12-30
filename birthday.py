@@ -83,9 +83,7 @@ async def setbirthday(ctx):
     month = list[0]
     day = list[1]
     
+    date = {'month': month, 'day': day}
+    
     with open('./birthdays.json', 'r+') as f:
-        config = json.load(f)
-        f.seek(0)
-        config[member]['month'] = [month]
-        config[member]['day'] = [day]
-        json.dump(config, f, indent=4)
+        json.dump(date, f, indent=4)
